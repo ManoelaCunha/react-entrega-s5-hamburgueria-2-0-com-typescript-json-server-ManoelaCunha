@@ -1,5 +1,11 @@
+import SignUp from "../../components/SignUp";
+
 const Register = () => {
-  return <>Cadastro</>;
+  return (
+    <>
+      <SignUp />
+    </>
+  );
 };
 
 export default Register;

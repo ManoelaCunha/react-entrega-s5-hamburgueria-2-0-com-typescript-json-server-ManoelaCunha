@@ -6,6 +6,7 @@ interface IUserDataSignUp {
   name: string;
   email: string;
   password: string;
+  confirmPassword: string;
 }
 interface IUserDataSignIn {
   email: string;
@@ -42,6 +43,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     api
       .post("login", userData)
       .then((response) => {
+        console.log(response);
         localStorage.setItem(
           "@HamburgueriaKenzie:token",
           response.data.accessToken
