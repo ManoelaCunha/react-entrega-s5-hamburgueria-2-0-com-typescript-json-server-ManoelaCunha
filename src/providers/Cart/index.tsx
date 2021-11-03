@@ -24,12 +24,12 @@ interface CartProviderData {
   cartToken: string;
   cart: IProduct[];
   cartTotal: number;
+  cleanCart: () => void;
   getProductsCart: () => void;
   addProduct: (product: IProduct) => void;
   deleteProduct: (id: number) => void;
   totalSale: (price: number) => void;
   updateTotalSale: (price: number) => void;
-  cleanCart: () => void;
 }
 
 const CartContext = createContext<CartProviderData>({} as CartProviderData);
@@ -93,15 +93,16 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   const cleanCart = () => {
-    api
-      .delete("cart", {
-        headers: { Authorization: `Bearer ${cartToken}` },
-      })
-      .then((_) => {
-        setCart([]);
-        setCartTotal(0);
-      })
-      .catch((error) => console.log(error));
+    cart.map((product) => {
+      return api
+        .delete(`cart/${product.id}`, {
+          headers: { Authorization: `Bearer ${cartToken}` },
+        })
+        .then((_) => {
+          setCartTotal(0);
+        })
+        .catch((error) => console.log(error));
+    });
   };
 
   return (

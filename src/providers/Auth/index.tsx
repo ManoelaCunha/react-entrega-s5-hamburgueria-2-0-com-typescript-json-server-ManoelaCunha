@@ -37,8 +37,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const SignUp = (userData: IUserDataSignUp, history: History) => {
     api
       .post("users", userData)
-      .then((response) => {
-        console.log(response);
+      .then((_) => {
         history.push("/");
       })
       .catch((err) => console.log(err));
@@ -48,7 +47,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     api
       .post("login", userData)
       .then((response) => {
-        console.log(response);
         localStorage.setItem(
           "@HamburgueriaKenzie:token",
           response.data.accessToken
