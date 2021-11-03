@@ -6,6 +6,7 @@ interface IProduct {
   category: string;
   price: number;
   id: number;
+  userId: number;
 }
 
 interface ProductsListProps {

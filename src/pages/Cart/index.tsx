@@ -1,10 +1,14 @@
 import Menu from "../../components/Menu";
+import CartList from "../../components/CartList";
+import { useCart } from "../../providers/Cart";
 
 const Cart = () => {
+  const { cart } = useCart();
+
   return (
     <>
       <Menu />
-      <p>Carrinho</p>
+      <CartList productsCart={cart} isInTheCart={true} />
     </>
   );
 };

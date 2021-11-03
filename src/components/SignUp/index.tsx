@@ -57,7 +57,7 @@ const SignUp = () => {
   };
 
   return (
-    <Paper elevation={3} style={{ padding: "20px" }}>
+    <Paper elevation={3} style={{ padding: "20px", margin: "20px" }}>
       <div>
         <Typography variant="h5">CADASTRO</Typography>
         <Typography variant="subtitle2">

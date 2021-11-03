@@ -16,6 +16,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 interface AuthProviderData {
+  userId: string;
   authToken: string;
   SignUp: (userData: IUserDataSignUp, history: History) => void;
   SignIn: (userData: IUserDataSignIn, history: History) => void;
@@ -27,6 +28,10 @@ const AuthContext = createContext<AuthProviderData>({} as AuthProviderData);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authToken, setAuthToken] = useState(
     () => localStorage.getItem("@HamburgueriaKenzie:token") || ""
+  );
+
+  const [userId, setUserId] = useState(
+    () => localStorage.getItem("@HamburgueriaKenzie:userId") || ""
   );
 
   const SignUp = (userData: IUserDataSignUp, history: History) => {
@@ -48,7 +53,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           "@HamburgueriaKenzie:token",
           response.data.accessToken
         );
+        localStorage.setItem(
+          "@HamburgueriaKenzie:userId",
+          response.data.user.id
+        );
         setAuthToken(response.data.accessToken);
+        setUserId(response.data.user.id);
         history.push("/home");
       })
       .catch((err) => console.log(err));
@@ -61,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authToken, Logout, SignIn, SignUp }}>
+    <AuthContext.Provider value={{ authToken, userId, Logout, SignIn, SignUp }}>
       {children}
     </AuthContext.Provider>
   );

@@ -11,10 +11,14 @@ import {
 import { ShoppingCart, ExitToApp } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
+import { useCart } from "../../providers/Cart";
 
 const Menu = () => {
   const history = useHistory();
   const { Logout } = useAuth();
+  const { cart } = useCart();
+
+  const length = cart.length;
 
   const sendTo = (path: any) => {
     history.push(path);
@@ -31,7 +35,7 @@ const Menu = () => {
           <MenuItem onClick={() => sendTo("/home")}>Home</MenuItem>
 
           <IconButton color="inherit" onClick={() => sendTo("/cart")}>
-            <Badge badgeContent="0" color="error">
+            <Badge badgeContent={length} color="error">
               <ShoppingCart />
             </Badge>
           </IconButton>

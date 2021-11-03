@@ -49,7 +49,7 @@ const SignIn = () => {
   };
 
   return (
-    <Paper elevation={3} style={{ padding: "20px" }}>
+    <Paper elevation={3} style={{ padding: "20px", margin: "20px" }}>
       <Typography variant="h5">LOGIN</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>

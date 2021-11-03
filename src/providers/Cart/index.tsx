@@ -13,6 +13,7 @@ interface IProduct {
   category: string;
   price: number;
   id: number;
+  userId: number;
 }
 
 interface CartProviderProps {
@@ -22,20 +23,25 @@ interface CartProviderProps {
 interface CartProviderData {
   cartToken: string;
   cart: IProduct[];
+  cartTotal: number;
   getProductsCart: () => void;
   addProduct: (product: IProduct) => void;
   deleteProduct: (id: number) => void;
+  totalSale: (price: number) => void;
+  updateTotalSale: (price: number) => void;
+  cleanCart: () => void;
 }
 
 const CartContext = createContext<CartProviderData>({} as CartProviderData);
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<IProduct[]>([] as IProduct[]);
-  console.log(cart);
 
   const [cartToken] = useState(
     () => localStorage.getItem("@HamburgueriaKenzie:token") || ""
   );
+
+  const [cartTotal, setCartTotal] = useState(0);
 
   const getProductsCart = () => {
     api
@@ -43,14 +49,14 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         headers: { Authorization: `Bearer ${cartToken}` },
       })
       .then((response) => {
-        setCart([...cart, ...response.data]);
+        setCart(response.data);
       })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
     getProductsCart();
-  }, []);
+  }, [cart]);
 
   const addProduct = (product: IProduct) => {
     api
@@ -74,9 +80,43 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       .catch((error) => console.log(error));
   };
 
+  const totalSale = (price: number) => {
+    const totalPrice = cart.reduce((acc, currentValue) => {
+      return acc + currentValue.price;
+    }, price);
+
+    setCartTotal(totalPrice);
+  };
+
+  const updateTotalSale = (price: number) => {
+    setCartTotal(cartTotal + price);
+  };
+
+  const cleanCart = () => {
+    api
+      .delete("cart", {
+        headers: { Authorization: `Bearer ${cartToken}` },
+      })
+      .then((_) => {
+        setCart([]);
+        setCartTotal(0);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartToken, cart, addProduct, deleteProduct, getProductsCart }}
+      value={{
+        cartToken,
+        cart,
+        cartTotal,
+        cleanCart,
+        totalSale,
+        addProduct,
+        deleteProduct,
+        getProductsCart,
+        updateTotalSale,
+      }}
     >
       {children}
     </CartContext.Provider>

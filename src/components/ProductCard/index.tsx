@@ -1,4 +1,8 @@
-import { Button, Paper, Typography } from "@material-ui/core";
+import { Button, ButtonGroup, Paper, Typography } from "@material-ui/core";
+import { Remove, Add } from "@material-ui/icons";
+import { useState } from "react";
+
+import { useAuth } from "../../providers/Auth";
 import { useCart } from "../../providers/Cart";
 
 interface IProduct {
@@ -7,6 +11,7 @@ interface IProduct {
   category: string;
   price: number;
   id: number;
+  userId: number;
 }
 
 interface ProductCardProps {
@@ -16,20 +21,26 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
   const { image, name, category, price, id } = product;
-  const { addProduct, deleteProduct } = useCart();
+  const { addProduct, deleteProduct, totalSale, updateTotalSale } = useCart();
+  const { userId } = useAuth();
+
+  const [count, setCount] = useState(1);
 
   const handleAddProduct = () => {
+    product["userId"] = Number(userId);
     addProduct(product);
+    totalSale(price);
   };
 
   const handleDeleteProduct = () => {
     deleteProduct(id);
+    totalSale(-price);
   };
 
   return (
     <Paper
       elevation={5}
-      style={{ width: "300px", height: "346px", margin: "10px" }}
+      style={{ width: "300px", height: "370px", margin: "10px" }}
     >
       <img src={image} alt={name} width="200" height="200" />
       <Typography variant="subtitle1">{name}</Typography>
@@ -41,13 +52,38 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
         })}
       </Typography>
       {isInTheCart ? (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleDeleteProduct}
-        >
-          Remover do Carrinho
-        </Button>
+        <>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleDeleteProduct}
+          >
+            Remover do Carrinho
+          </Button>
+
+          <ButtonGroup>
+            <Button
+              aria-label="reduce"
+              onClick={() => {
+                setCount(Math.max(count - 1, 1));
+                count > 1 && updateTotalSale(-price);
+              }}
+            >
+              <Remove fontSize="small" />
+            </Button>
+            <span> {count} </span>
+            <Button
+              aria-label="increase"
+              onClick={() => {
+                setCount(count + 1);
+                updateTotalSale(price);
+                console.log(price);
+              }}
+            >
+              <Add fontSize="small" />
+            </Button>
+          </ButtonGroup>
+        </>
       ) : (
         <Button variant="contained" color="primary" onClick={handleAddProduct}>
           Adicionar no Carrinho
