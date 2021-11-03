@@ -1,15 +1,7 @@
 import { Button } from "@material-ui/core";
 import { useCart } from "../../providers/Cart";
+import { IProduct } from "../../types/types";
 import ProductCard from "../ProductCard";
-
-interface IProduct {
-  image: string;
-  name: string;
-  category: string;
-  price: number;
-  id: number;
-  userId: number;
-}
 
 interface CartListProps {
   productsCart: IProduct[];

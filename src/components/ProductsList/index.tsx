@@ -1,13 +1,5 @@
+import { IProduct } from "../../types/types";
 import ProductCard from "../ProductCard";
-
-interface IProduct {
-  image: string;
-  name: string;
-  category: string;
-  price: number;
-  id: number;
-  userId: number;
-}
 
 interface ProductsListProps {
   products: IProduct[];

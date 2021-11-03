@@ -9,14 +9,10 @@ import {
   EmailOutlined,
 } from "@material-ui/icons";
 
-import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
-
-interface IUserDataSignIn {
-  email: string;
-  password: string;
-}
+import { IUserDataSignIn } from "../../types/types";
 
 const SignIn = () => {
   const history = useHistory();

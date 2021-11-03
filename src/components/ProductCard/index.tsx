@@ -4,15 +4,7 @@ import { useState } from "react";
 
 import { useAuth } from "../../providers/Auth";
 import { useCart } from "../../providers/Cart";
-
-interface IProduct {
-  image: string;
-  name: string;
-  category: string;
-  price: number;
-  id: number;
-  userId: number;
-}
+import { IProduct } from "../../types/types";
 
 interface ProductCardProps {
   product: IProduct;
