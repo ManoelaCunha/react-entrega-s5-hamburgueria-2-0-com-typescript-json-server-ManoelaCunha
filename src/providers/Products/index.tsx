@@ -12,6 +12,7 @@ interface IProduct {
   name: string;
   category: string;
   price: number;
+  id: number;
 }
 
 interface ProductsProviderProps {

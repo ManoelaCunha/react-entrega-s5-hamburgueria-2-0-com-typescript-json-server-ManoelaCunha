@@ -1,10 +1,12 @@
 import { Button, Paper, Typography } from "@material-ui/core";
+import { useCart } from "../../providers/Cart";
 
 interface IProduct {
   image: string;
   name: string;
   category: string;
   price: number;
+  id: number;
 }
 
 interface ProductCardProps {
@@ -13,7 +15,16 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
-  const { image, name, category, price } = product;
+  const { image, name, category, price, id } = product;
+  const { addProduct, deleteProduct } = useCart();
+
+  const handleAddProduct = () => {
+    addProduct(product);
+  };
+
+  const handleDeleteProduct = () => {
+    deleteProduct(id);
+  };
 
   return (
     <Paper
@@ -33,16 +44,12 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
         <Button
           variant="contained"
           color="secondary"
-          //onClick={handleDeleteProduct}
+          onClick={handleDeleteProduct}
         >
           Remover do Carrinho
         </Button>
       ) : (
-        <Button
-          variant="contained"
-          color="primary"
-          //onClick={handleAddProduct}
-        >
+        <Button variant="contained" color="primary" onClick={handleAddProduct}>
           Adicionar no Carrinho
         </Button>
       )}
