@@ -1,6 +1,6 @@
 import { styled } from "@material-ui/styles";
 import { ShoppingCart, ExitToApp } from "@material-ui/icons";
-import { AppBar, Badge, Box, Toolbar } from "@material-ui/core";
+import { AppBar, Box, Toolbar } from "@material-ui/core";
 
 export const CssAppBar = styled(AppBar)({
   backgroundColor: "#E0E0E0",
@@ -12,6 +12,7 @@ export const CssToolbar = styled(Toolbar)({
   height: "80px",
   alignItems: "center",
   justifyContent: "space-between",
+  paddingRight: "0px",
   "@media (min-width:1024px)": {
     width: "950px",
   },

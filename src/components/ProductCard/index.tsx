@@ -1,10 +1,24 @@
-import { Button, ButtonGroup, Paper, Typography } from "@material-ui/core";
-import { Remove, Add } from "@material-ui/icons";
-import { useState } from "react";
+import { Box } from "@material-ui/core";
+import { Remove, Add, Delete } from "@material-ui/icons";
 
+import { useState } from "react";
 import { useAuth } from "../../providers/Auth";
 import { useCart } from "../../providers/Cart";
 import { IProduct } from "../../types/types";
+
+import {
+  CssBoxImg,
+  CssButtonAdd,
+  CssButtonGroup,
+  CssPaper,
+  CssPaperCart,
+  CssIconButton,
+  CssTypographyCategory,
+  CssTypographyCount,
+  CssTypographyPrice,
+  CssTypographyTitle,
+  CssButton,
+} from "./styles";
 
 interface ProductCardProps {
   product: IProduct;
@@ -30,58 +44,73 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
   };
 
   return (
-    <Paper
-      elevation={5}
-      style={{ width: "300px", height: "370px", margin: "10px" }}
-    >
-      <img src={image} alt={name} width="200" height="200" />
-      <Typography variant="subtitle1">{name}</Typography>
-      <Typography variant="subtitle1">{category}</Typography>
-      <Typography variant="h6" color="primary">
-        {price.toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        })}
-      </Typography>
+    <>
       {isInTheCart ? (
-        <>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleDeleteProduct}
-          >
-            Remover do Carrinho
-          </Button>
+        <CssPaperCart elevation={5}>
+          <CssBoxImg>
+            <img src={image} alt={name} width="135" height="135" />
+          </CssBoxImg>
 
-          <ButtonGroup>
-            <Button
-              aria-label="reduce"
-              onClick={() => {
-                setCount(Math.max(count - 1, 1));
-                count > 1 && updateTotalSale(-price);
-              }}
-            >
-              <Remove fontSize="small" />
-            </Button>
-            <span> {count} </span>
-            <Button
-              aria-label="increase"
-              onClick={() => {
-                setCount(count + 1);
-                updateTotalSale(price);
-                console.log(price);
-              }}
-            >
-              <Add fontSize="small" />
-            </Button>
-          </ButtonGroup>
-        </>
+          <Box>
+            <CssTypographyTitle variant="subtitle1">{name}</CssTypographyTitle>
+            <CssTypographyPrice variant="h6">
+              {price.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </CssTypographyPrice>
+
+            <CssButtonGroup>
+              <CssButton
+                onClick={() => {
+                  setCount(Math.max(count - 1, 1));
+                  count > 1 && updateTotalSale(-price);
+                }}
+              >
+                <Remove fontSize="small" />
+              </CssButton>
+
+              <CssTypographyCount variant="h6">{count}</CssTypographyCount>
+
+              <CssButton
+                onClick={() => {
+                  setCount(count + 1);
+                  updateTotalSale(price);
+                }}
+              >
+                <Add fontSize="small" />
+              </CssButton>
+            </CssButtonGroup>
+          </Box>
+
+          <Box>
+            <CssIconButton onClick={handleDeleteProduct}>
+              <Delete />
+            </CssIconButton>
+          </Box>
+        </CssPaperCart>
       ) : (
-        <Button variant="contained" color="primary" onClick={handleAddProduct}>
-          Adicionar no Carrinho
-        </Button>
+        <CssPaper elevation={5}>
+          <CssBoxImg>
+            <img src={image} alt={name} width="200" height="200" />
+          </CssBoxImg>
+          <CssTypographyTitle variant="h6">{name}</CssTypographyTitle>
+          <CssTypographyCategory variant="subtitle1">
+            {category}
+          </CssTypographyCategory>
+          <CssTypographyPrice variant="h6">
+            {price.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </CssTypographyPrice>
+
+          <CssButtonAdd variant="contained" onClick={handleAddProduct}>
+            Adicionar
+          </CssButtonAdd>
+        </CssPaper>
       )}
-    </Paper>
+    </>
   );
 };
 
