@@ -23,6 +23,7 @@ const Routes = ({ isPrivate = false }: RouteProps) => {
           <Route path="/register">
             <Register />
           </Route>
+          <Redirect to="/" />
         </>
       ) : (
         <>
@@ -32,6 +33,7 @@ const Routes = ({ isPrivate = false }: RouteProps) => {
           <Route path="/cart">
             <Cart />
           </Route>
+          <Redirect to="/home" />
         </>
       )}
     </Switch>
