@@ -1,17 +1,17 @@
-import {
-  AppBar,
-  Badge,
-  Box,
-  IconButton,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
-
-import { ShoppingCart, ExitToApp } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
+import { Badge, IconButton } from "@material-ui/core";
+import { useHistory, Link } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
 import { useCart } from "../../providers/Cart";
+import img from "../../assets/Mask Group.png";
+
+import {
+  CssAppBar,
+  CssBoxIcon,
+  CssBoxImg,
+  CssExitToApp,
+  CssShoppingCart,
+  CssToolbar,
+} from "./styles";
 
 const Menu = () => {
   const history = useHistory();
@@ -25,27 +25,27 @@ const Menu = () => {
   };
 
   return (
-    <AppBar position="static">
-      <Toolbar style={{ justifyContent: "space-between" }}>
-        <Box>
-          <Typography variant="h6">Burguer Kenzie</Typography>
-        </Box>
+    <CssAppBar position="static">
+      <CssToolbar>
+        <CssBoxImg>
+          <Link to="/home">
+            <img src={img} alt="logo" width="150" />
+          </Link>
+        </CssBoxImg>
 
-        <Box style={{ display: "flex" }}>
-          <MenuItem onClick={() => sendTo("/home")}>Home</MenuItem>
-
+        <CssBoxIcon>
           <IconButton color="inherit" onClick={() => sendTo("/cart")}>
             <Badge badgeContent={length} color="error">
-              <ShoppingCart />
+              <CssShoppingCart />
             </Badge>
           </IconButton>
 
           <IconButton color="inherit" onClick={() => Logout(history)}>
-            <ExitToApp />
+            <CssExitToApp />
           </IconButton>
-        </Box>
-      </Toolbar>
-    </AppBar>
+        </CssBoxIcon>
+      </CssToolbar>
+    </CssAppBar>
   );
 };
 

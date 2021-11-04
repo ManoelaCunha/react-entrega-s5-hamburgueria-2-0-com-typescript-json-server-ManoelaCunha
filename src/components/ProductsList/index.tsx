@@ -14,6 +14,7 @@ const ProductsList = ({ products, isInTheCart = false }: ProductsListProps) => {
         flexWrap: "wrap",
         maxWidth: "1280px",
         margin: "20px",
+        justifyContent: "center",
       }}
     >
       {products.map((product, index) => (
