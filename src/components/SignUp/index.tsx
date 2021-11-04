@@ -2,18 +2,23 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, TextField, Paper, Typography } from "@material-ui/core";
-import {
-  Person,
-  VisibilityOutlined,
-  VisibilityOffOutlined,
-  EmailOutlined,
-} from "@material-ui/icons";
-
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
 import { IUserDataSignUp } from "../../types/types";
+
+import {
+  CssBox,
+  CssButtonSignUp,
+  CssEmailIcon,
+  CssPaper,
+  CssPersonIcon,
+  CssTextField,
+  CssTypographyText,
+  CssTypographyTitle,
+  CssVisibilityIcon,
+  CssVisibilityOffIcon,
+} from "./styles";
 
 const SignUp = () => {
   const history = useHistory();
@@ -51,16 +56,16 @@ const SignUp = () => {
   };
 
   return (
-    <Paper elevation={3} style={{ padding: "20px", margin: "20px" }}>
-      <div>
-        <Typography variant="h5">CADASTRO</Typography>
-        <Typography variant="subtitle2">
+    <CssPaper elevation={3}>
+      <CssBox>
+        <CssTypographyTitle variant="h5">CADASTRO</CssTypographyTitle>
+        <CssTypographyText variant="subtitle2">
           <Link to="/">Retornar para o Login</Link>
-        </Typography>
-      </div>
+        </CssTypographyText>
+      </CssBox>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <TextField
+          <CssTextField
             type="text"
             size="small"
             label="Nome"
@@ -70,12 +75,12 @@ const SignUp = () => {
             error={!!errors.name}
             helperText={errors.name?.message}
             InputProps={{
-              endAdornment: <Person />,
+              endAdornment: <CssPersonIcon />,
             }}
           />
         </div>
         <div>
-          <TextField
+          <CssTextField
             type="email"
             size="small"
             label="Email"
@@ -85,12 +90,12 @@ const SignUp = () => {
             error={!!errors.email}
             helperText={errors.email?.message}
             InputProps={{
-              endAdornment: <EmailOutlined />,
+              endAdornment: <CssEmailIcon />,
             }}
           />
         </div>
         <div>
-          <TextField
+          <CssTextField
             type={!showPassword ? "password" : "text"}
             size="small"
             label="Senha"
@@ -101,15 +106,15 @@ const SignUp = () => {
             helperText={errors.password?.message}
             InputProps={{
               endAdornment: showPassword ? (
-                <VisibilityOffOutlined onClick={handleShowPassword} />
+                <CssVisibilityOffIcon onClick={handleShowPassword} />
               ) : (
-                <VisibilityOutlined onClick={handleShowPassword} />
+                <CssVisibilityIcon onClick={handleShowPassword} />
               ),
             }}
           />
         </div>
         <div>
-          <TextField
+          <CssTextField
             type={!showPassword ? "password" : "text"}
             size="small"
             label="Confirmar Senha"
@@ -120,25 +125,20 @@ const SignUp = () => {
             helperText={errors.confirmPassword?.message}
             InputProps={{
               endAdornment: showPassword ? (
-                <VisibilityOffOutlined onClick={handleShowPassword} />
+                <CssVisibilityOffIcon onClick={handleShowPassword} />
               ) : (
-                <VisibilityOutlined onClick={handleShowPassword} />
+                <CssVisibilityIcon onClick={handleShowPassword} />
               ),
             }}
           />
         </div>
         <div>
-          <Button
-            type="submit"
-            size="large"
-            color="default"
-            variant="contained"
-          >
+          <CssButtonSignUp type="submit" size="large" variant="contained">
             Cadastrar
-          </Button>
+          </CssButtonSignUp>
         </div>
       </form>
-    </Paper>
+    </CssPaper>
   );
 };
 
