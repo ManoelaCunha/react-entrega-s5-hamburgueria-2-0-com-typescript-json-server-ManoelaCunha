@@ -6,6 +6,7 @@ import {
   ReactNode,
 } from "react";
 import api from "../../services";
+import { toast } from "react-toastify";
 import { IProduct } from "../../types/types";
 
 interface CartProviderProps {
@@ -55,8 +56,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       .post("cart", product, {
         headers: { Authorization: `Bearer ${cartToken}` },
       })
-      .then((response) => {
-        console.log(response);
+      .then((_) => {
+        toast.success("Produto adicionado no carrinho!");
       })
       .catch((error) => console.log(error));
   };
@@ -66,8 +67,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       .delete(`cart/${id}`, {
         headers: { Authorization: `Bearer ${cartToken}` },
       })
-      .then((response) => {
-        console.log(response);
+      .then((_) => {
+        toast.success("Produto excluído do carrinho!");
       })
       .catch((error) => console.log(error));
   };
@@ -91,6 +92,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
           headers: { Authorization: `Bearer ${cartToken}` },
         })
         .then((_) => {
+          toast.success("Seu carrinho está limpo!");
           setCartTotal(0);
         })
         .catch((error) => console.log(error));

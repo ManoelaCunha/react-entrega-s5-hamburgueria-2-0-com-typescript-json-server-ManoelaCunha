@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { IUserDataSignIn, IUserDataSignUp } from "../../types/types";
+import { toast } from "react-toastify";
 import { History } from "history";
 import api from "../../services";
 
@@ -30,6 +31,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     api
       .post("users", userData)
       .then((_) => {
+        toast.success("Sucesso ao criar a conta!");
         history.push("/");
       })
       .catch((err) => console.log(err));
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         );
         setAuthToken(response.data.accessToken);
         setUserId(response.data.user.id);
+        toast.success("Sucesso ao fazer Login!");
         history.push("/home");
         window.location.reload();
       })
