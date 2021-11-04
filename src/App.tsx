@@ -1,14 +1,14 @@
 import React from "react";
-import "./App.css";
 import Routes from "./routes";
+import GlobalStyles from "./styles/global";
+import { Container } from "./styles/styles";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Routes />
-      </header>
-    </div>
+    <Container>
+      <Routes />
+      <GlobalStyles />
+    </Container>
   );
 }
 

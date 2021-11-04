@@ -2,17 +2,22 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, TextField, Paper, Typography } from "@material-ui/core";
-import {
-  VisibilityOutlined,
-  VisibilityOffOutlined,
-  EmailOutlined,
-} from "@material-ui/icons";
-
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
 import { IUserDataSignIn } from "../../types/types";
+
+import {
+  CssButtonSignIn,
+  CssButtonSignUp,
+  CssEmailIcon,
+  CssPaper,
+  CssTextField,
+  CssTypographyText,
+  CssTypographyTitle,
+  CssVisibilityIcon,
+  CssVisibilityOffIcon,
+} from "./styles";
 
 const SignIn = () => {
   const history = useHistory();
@@ -45,11 +50,11 @@ const SignIn = () => {
   };
 
   return (
-    <Paper elevation={3} style={{ padding: "20px", margin: "20px" }}>
-      <Typography variant="h5">LOGIN</Typography>
+    <CssPaper elevation={3}>
+      <CssTypographyTitle variant="h5">LOGIN</CssTypographyTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <TextField
+          <CssTextField
             type="email"
             size="small"
             label="Email"
@@ -59,12 +64,12 @@ const SignIn = () => {
             error={!!errors.email}
             helperText={errors.email?.message}
             InputProps={{
-              endAdornment: <EmailOutlined />,
+              endAdornment: <CssEmailIcon />,
             }}
           />
         </div>
         <div>
-          <TextField
+          <CssTextField
             type={!showPassword ? "password" : "text"}
             size="small"
             label="Senha"
@@ -75,43 +80,34 @@ const SignIn = () => {
             helperText={errors.password?.message}
             InputProps={{
               endAdornment: showPassword ? (
-                <VisibilityOffOutlined onClick={handleShowPassword} />
+                <CssVisibilityOffIcon onClick={handleShowPassword} />
               ) : (
-                <VisibilityOutlined onClick={handleShowPassword} />
+                <CssVisibilityIcon onClick={handleShowPassword} />
               ),
             }}
           />
         </div>
         <div>
-          <Button
-            type="submit"
-            size="large"
-            color="primary"
-            variant="contained"
-          >
+          <CssButtonSignIn type="submit" size="large" variant="contained">
             Entrar
-          </Button>
+          </CssButtonSignIn>
         </div>
       </form>
       <div>
-        <Typography
-          variant="subtitle2"
-          style={{ maxWidth: "327px", padding: "10px" }}
-        >
+        <CssTypographyText variant="subtitle2">
           Crie sua conta para saborear muitas delícias e matar sua fome!
-        </Typography>
+        </CssTypographyText>
       </div>
       <div>
-        <Button
+        <CssButtonSignUp
           size="large"
-          color="default"
           variant="contained"
           onClick={() => history.push("/register")}
         >
           Cadastrar
-        </Button>
+        </CssButtonSignUp>
       </div>
-    </Paper>
+    </CssPaper>
   );
 };
 
