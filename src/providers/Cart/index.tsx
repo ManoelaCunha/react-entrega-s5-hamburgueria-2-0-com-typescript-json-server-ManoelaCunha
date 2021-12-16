@@ -8,6 +8,7 @@ import {
 import api from "../../services";
 import { toast } from "react-toastify";
 import { IProduct } from "../../types/types";
+import { useAuth } from "../Auth";
 
 interface CartProviderProps {
   children: ReactNode;
@@ -35,10 +36,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   );
 
   const [cartTotal, setCartTotal] = useState(0);
+  const { userId } = useAuth();
 
   const getProductsCart = () => {
     api
-      .get("cart", {
+      .get(`cart?userId=${userId}`, {
         headers: { Authorization: `Bearer ${cartToken}` },
       })
       .then((response) => {
