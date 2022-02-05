@@ -1,4 +1,5 @@
 import { Button, Typography } from "@material-ui/core";
+import { useEffect } from "react";
 import { useCart } from "../../providers/Cart";
 import { IProduct } from "../../types/types";
 import ProductCard from "../ProductCard";
@@ -15,7 +16,7 @@ interface CartListProps {
 }
 
 const CartList = ({ productsCart, isInTheCart = false }: CartListProps) => {
-  const { cart, cartTotal, cleanCart } = useCart();
+  const { cart, cartTotal, cleanCart, getProductsCart } = useCart();
 
   const styleBtn = {
     width: "300px",
@@ -33,6 +34,11 @@ const CartList = ({ productsCart, isInTheCart = false }: CartListProps) => {
   const styleSubtitle = {
     color: "#828282",
   };
+
+  useEffect(() => {
+    getProductsCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart]);
 
   return (
     <>

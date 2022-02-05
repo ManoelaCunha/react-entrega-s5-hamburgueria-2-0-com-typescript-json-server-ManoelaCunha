@@ -19,6 +19,10 @@ export const ContainerTitle = styled.div`
   color: white;
   background-color: #219653;
   border-radius: 4px;
+
+  @media (min-width: 425px) {
+    width: 335px;
+  }
 `;
 
 export const ContainerTotalPrice = styled.div`
@@ -31,6 +35,10 @@ export const ContainerTotalPrice = styled.div`
   color: white;
   background-color: #219653;
   border-radius: 4px;
+
+  @media (min-width: 425px) {
+    width: 335px;
+  }
 `;
 
 export const ContainerText = styled.div`

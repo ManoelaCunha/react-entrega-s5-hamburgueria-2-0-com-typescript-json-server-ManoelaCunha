@@ -6,6 +6,10 @@ import {
   IconButton,
   Paper,
   Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputBase,
 } from "@material-ui/core";
 
 export const CssPaper = styled(Paper)({
@@ -87,4 +91,41 @@ export const CssIconButton = styled(IconButton)({
 export const CssButton = styled(Button)({
   minWidth: "35px",
   padding: "2px",
+});
+
+//Filter Products
+
+export const BootstrapInput = styled(InputBase)({
+  "& .MuiInputBase-input": {
+    borderRadius: 4,
+    backgroundColor: "#219653",
+    border: "1px solid #219653",
+    paddingTop: "2px",
+    paddingBottom: "2px",
+
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#219653",
+    },
+  },
+});
+
+export const Filter = styled(Select)({
+  color: "#fff",
+  padding: "10px",
+  fontSize: 12,
+  background: "#219653",
+  borderRadius: 4,
+  width: 120,
+});
+
+export const MenuItemCustom = styled(MenuItem)({
+  color: "#000",
+  height: 40,
+  fontSize: 12,
+});
+
+export const FormControlCustom = styled(FormControl)({
+  marginTop: "28px",
+  border: "none",
 });

@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 import api from "../../services";
 import { toast } from "react-toastify";
 import { IProduct } from "../../types/types";
@@ -15,7 +9,6 @@ interface CartProviderProps {
 }
 
 interface CartProviderData {
-  cartToken: string;
   cart: IProduct[];
   cartTotal: number;
   cleanCart: () => void;
@@ -31,17 +24,13 @@ const CartContext = createContext<CartProviderData>({} as CartProviderData);
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<IProduct[]>([] as IProduct[]);
 
-  const [cartToken] = useState(
-    () => localStorage.getItem("@HamburgueriaKenzie:token") || ""
-  );
-
   const [cartTotal, setCartTotal] = useState(0);
-  const { userId } = useAuth();
+  const { userId, authToken } = useAuth();
 
   const getProductsCart = () => {
     api
       .get(`cart?userId=${userId}`, {
-        headers: { Authorization: `Bearer ${cartToken}` },
+        headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((response) => {
         setCart(response.data);
@@ -49,25 +38,23 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       .catch((error) => console.log(error));
   };
 
-  useEffect(() => {
-    getProductsCart();
-  }, [cart]);
-
   const addProduct = (product: IProduct) => {
     api
       .post("cart", product, {
-        headers: { Authorization: `Bearer ${cartToken}` },
+        headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((_) => {
         toast.success("Produto adicionado no carrinho!");
       })
-      .catch((error) => console.log(error));
+      .catch((_) => {
+        toast.warning("Produto já foi adicionado no carrinho!");
+      });
   };
 
   const deleteProduct = (id: number) => {
     api
       .delete(`cart/${id}`, {
-        headers: { Authorization: `Bearer ${cartToken}` },
+        headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((_) => {
         toast.success("Produto excluído do carrinho!");
@@ -91,7 +78,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     cart.map((product) => {
       return api
         .delete(`cart/${product.id}`, {
-          headers: { Authorization: `Bearer ${cartToken}` },
+          headers: { Authorization: `Bearer ${authToken}` },
         })
         .then((_) => {
           toast.success("Seu carrinho está limpo!");
@@ -104,7 +91,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   return (
     <CartContext.Provider
       value={{
-        cartToken,
         cart,
         cartTotal,
         cleanCart,
