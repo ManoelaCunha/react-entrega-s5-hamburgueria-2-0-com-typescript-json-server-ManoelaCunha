@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUserId(response.data.user.id);
         toast.success("Sucesso ao fazer Login!");
         history.push("/home");
-        window.location.reload();
       })
       .catch((err) => console.log(err));
   };

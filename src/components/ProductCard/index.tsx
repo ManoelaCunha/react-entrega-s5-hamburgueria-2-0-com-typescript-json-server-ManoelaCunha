@@ -18,6 +18,8 @@ import {
   CssTypographyPrice,
   CssTypographyTitle,
   CssButton,
+  CssBoxImgCart,
+  CssBoxContentCart,
 } from "./styles";
 
 interface ProductCardProps {
@@ -47,11 +49,11 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
     <>
       {isInTheCart ? (
         <CssPaperCart elevation={5}>
-          <CssBoxImg>
-            <img src={image} alt={name} width="135" height="135" />
-          </CssBoxImg>
+          <CssBoxImgCart>
+            <img src={image} alt={name} width="135" height="85" />
+          </CssBoxImgCart>
 
-          <Box>
+          <CssBoxContentCart>
             <CssTypographyTitle variant="subtitle1">{name}</CssTypographyTitle>
             <CssTypographyPrice variant="h6">
               {price.toLocaleString("pt-BR", {
@@ -81,7 +83,7 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
                 <Add fontSize="small" />
               </CssButton>
             </CssButtonGroup>
-          </Box>
+          </CssBoxContentCart>
 
           <Box>
             <CssIconButton onClick={handleDeleteProduct}>
@@ -92,7 +94,7 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
       ) : (
         <CssPaper elevation={5}>
           <CssBoxImg>
-            <img src={image} alt={name} width="200" height="200" />
+            <img src={image} alt={name} width="200" height="140" />
           </CssBoxImg>
           <CssTypographyTitle variant="h6">{name}</CssTypographyTitle>
           <CssTypographyCategory variant="subtitle1">

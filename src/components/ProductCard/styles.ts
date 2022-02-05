@@ -23,6 +23,20 @@ export const CssPaperCart = styled(Paper)({
 
 export const CssBoxImg = styled(Box)({
   backgroundColor: "#E0E0E0",
+  padding: "20px",
+});
+
+export const CssBoxImgCart = styled(Box)({
+  backgroundColor: "#E0E0E0",
+  display: "flex",
+  alignItems: "center",
+});
+
+export const CssBoxContentCart = styled(Box)({
+  width: "128px",
+  "@media (min-width:425px)": {
+    width: "182px",
+  },
 });
 
 export const CssTypographyTitle = styled(Typography)({
@@ -52,8 +66,8 @@ export const CssTypographyCount = styled(Typography)({
 
 export const CssButtonGroup = styled(ButtonGroup)({
   minWidth: "35px",
-  margin: "5px 20px",
-  marginRight: "10px",
+  margin: "10px 20px",
+  display: "flex",
 });
 
 export const CssButtonAdd = styled(Button)({
