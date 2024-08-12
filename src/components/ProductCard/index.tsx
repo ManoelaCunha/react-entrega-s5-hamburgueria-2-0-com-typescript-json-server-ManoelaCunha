@@ -89,11 +89,11 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
             </CssButtonGroup>
           </CssBoxContentCart>
 
-          <Box>
+          <div>
             <CssIconButton onClick={handleDeleteProduct}>
               <Delete />
             </CssIconButton>
-          </Box>
+          </div>
         </CssPaperCart>
       ) : (
         <CssPaper elevation={5}>

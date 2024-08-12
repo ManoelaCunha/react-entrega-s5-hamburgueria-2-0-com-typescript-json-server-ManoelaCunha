@@ -1,5 +1,5 @@
 import React from "react";
-import Routes from "./routes";
+import AppRoutes from "./routes";
 import GlobalStyles from "./styles/global";
 import { Container } from "./styles/styles";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +20,7 @@ const App = () => {
         pauseOnHover
         style={{ fontSize: "16px" }}
       />
-      <Routes />
+      <AppRoutes />
       <GlobalStyles />
     </Container>
   );

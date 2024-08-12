@@ -1,5 +1,5 @@
 import { Badge, IconButton } from "@material-ui/core";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
 import { useCart } from "../../providers/Cart";
 import img from "../../assets/Mask Group.png";
@@ -14,14 +14,14 @@ import {
 } from "./styles";
 
 const Menu = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { Logout } = useAuth();
   const { cart } = useCart();
 
   const length = cart.length;
 
   const sendTo = (path: any) => {
-    history.push(path);
+    navigate(path);
   };
 
   return (
@@ -40,7 +40,7 @@ const Menu = () => {
             </Badge>
           </IconButton>
 
-          <IconButton color="inherit" onClick={() => Logout(history)}>
+          <IconButton color="inherit" onClick={() => Logout(navigate)}>
             <CssExitToApp />
           </IconButton>
         </CssBoxIcon>

@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, ReactNode, useMemo } from "react";
 import { IUserDataSignIn, IUserDataSignUp } from "../../types/types";
+import { NavigateFunction } from "react-router";
 import { toast } from "react-toastify";
-import { History } from "history";
 import api from "../../services";
 
 interface AuthProviderProps {
@@ -11,9 +11,9 @@ interface AuthProviderProps {
 interface AuthProviderData {
   userId: string;
   authToken: string;
-  SignUp: (userData: IUserDataSignUp, history: History) => void;
-  SignIn: (userData: IUserDataSignIn, history: History) => void;
-  Logout: (history: History) => void;
+  SignUp: (userData: IUserDataSignUp, navigate: NavigateFunction) => void;
+  SignIn: (userData: IUserDataSignIn, navigate: NavigateFunction) => void;
+  Logout: (navigate: NavigateFunction) => void;
 }
 
 const AuthContext = createContext<AuthProviderData>({} as AuthProviderData);
@@ -27,17 +27,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     () => localStorage.getItem("@HamburgueriaKenzie:userId") || ""
   );
 
-  const SignUp = (userData: IUserDataSignUp, history: History) => {
+  const SignUp = (userData: IUserDataSignUp, navigate: NavigateFunction) => {
     api
       .post("users", userData)
       .then((_) => {
         toast.success("Sucesso ao criar a conta!");
-        history.push("/");
+        navigate("/");
       })
       .catch((err) => console.log(err));
   };
 
-  const SignIn = (userData: IUserDataSignIn, history: History) => {
+  const SignIn = (userData: IUserDataSignIn, navigate: NavigateFunction) => {
     api
       .post("login", userData)
       .then((response) => {
@@ -52,15 +52,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setAuthToken(response.data.accessToken);
         setUserId(response.data.user.id);
         toast.success("Sucesso ao fazer Login!");
-        history.push("/home");
+        navigate("/home");
       })
       .catch((err) => console.log(err));
   };
 
-  const Logout = (history: History) => {
+  const Logout = (navigate: NavigateFunction) => {
     localStorage.clear();
     setAuthToken("");
-    history.push("/");
+    navigate("/");
   };
 
   const value = useMemo(

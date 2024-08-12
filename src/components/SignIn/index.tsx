@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../providers/Auth";
 import { IUserDataSignIn } from "../../types/types";
 
@@ -20,7 +20,7 @@ import {
 } from "./styles";
 
 const SignIn = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { SignIn } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -47,7 +47,7 @@ const SignIn = () => {
   } = useForm<IUserDataSignIn>({ resolver: yupResolver(formSchema) });
 
   const onSubmit = (data: IUserDataSignIn) => {
-    SignIn(data, history);
+    SignIn(data, navigate);
   };
 
   return (
@@ -103,7 +103,7 @@ const SignIn = () => {
         <CssButtonSignUp
           size="large"
           variant="contained"
-          onClick={() => history.push("/register")}
+          onClick={() => navigate("/register")}
         >
           Cadastrar
         </CssButtonSignUp>

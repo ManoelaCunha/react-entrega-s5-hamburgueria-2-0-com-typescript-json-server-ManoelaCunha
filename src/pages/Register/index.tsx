@@ -6,9 +6,9 @@ import img from "../../assets/Mask Group.png";
 const Register = () => {
   return (
     <ContainerRegister>
-      <Box style={{ margin: "30px" }}>
+      <div style={{ margin: "30px" }}>
         <img src={img} alt="logo" width="200" />
-      </Box>
+      </div>
       <SignUp />
     </ContainerRegister>
   );
