@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useMemo,
+  useEffect,
+} from "react";
 import api from "../../services";
 import { toast } from "react-toastify";
 import { IProduct } from "../../types/types";
@@ -11,7 +18,7 @@ interface CartProviderProps {
 interface CartProviderData {
   cart: IProduct[];
   cartTotal: number;
-  cleanCart: () => void;
+  cleanCart: () => void | {};
   getProductsCart: () => void;
   addProduct: (product: IProduct) => void;
   deleteProduct: (id: number) => void;
@@ -23,8 +30,8 @@ const CartContext = createContext<CartProviderData>({} as CartProviderData);
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<IProduct[]>([] as IProduct[]);
-
   const [cartTotal, setCartTotal] = useState(0);
+
   const { userId, authToken } = useAuth();
 
   const getProductsCart = () => {
@@ -35,8 +42,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       .then((response) => {
         setCart(response.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
+
+  useEffect(() => {
+    getProductsCart();
+  }, []);
 
   const addProduct = (product: IProduct) => {
     api
@@ -44,9 +55,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((_) => {
+        getProductsCart();
         toast.success("Produto adicionado no carrinho!");
       })
-      .catch((_) => {
+      .catch((error) => {
+        console.error(error);
         toast.warning("Produto já foi adicionado no carrinho!");
       });
   };
@@ -57,9 +70,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         headers: { Authorization: `Bearer ${authToken}` },
       })
       .then((_) => {
+        getProductsCart();
         toast.success("Produto excluído do carrinho!");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   const totalSale = (price: number) => {
@@ -74,36 +88,39 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setCartTotal(cartTotal + price);
   };
 
-  const cleanCart = () => {
-    cart.map((product) => {
-      return api
+  const cleanCart = async () => {
+    setTimeout(
+      () => toast.success("Todos os produtos foram removidos do carrinho!"),
+      1000
+    );
+    for (const product of cart) {
+      await api
         .delete(`cart/${product.id}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         })
         .then((_) => {
-          toast.success("Seu carrinho está limpo!");
+          setCart([]);
           setCartTotal(0);
         })
-        .catch((error) => console.log(error));
-    });
+        .catch((error) => console.error(error));
+    }
   };
 
-  return (
-    <CartContext.Provider
-      value={{
-        cart,
-        cartTotal,
-        cleanCart,
-        totalSale,
-        addProduct,
-        deleteProduct,
-        getProductsCart,
-        updateTotalSale,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
+  const value = useMemo(
+    () => ({
+      cart,
+      cartTotal,
+      cleanCart,
+      totalSale,
+      addProduct,
+      deleteProduct,
+      getProductsCart,
+      updateTotalSale,
+    }),
+    [cart, cartTotal]
   );
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
 export const useCart = () => useContext(CartContext);

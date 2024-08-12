@@ -25,7 +25,7 @@ const Menu = () => {
   };
 
   return (
-    <CssAppBar position="static">
+    <CssAppBar position="fixed">
       <CssToolbar>
         <CssBoxImg>
           <Link to="/home">

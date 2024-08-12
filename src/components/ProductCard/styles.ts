@@ -26,14 +26,15 @@ export const CssPaperCart = styled(Paper)({
 });
 
 export const CssBoxImg = styled(Box)({
-  backgroundColor: "#E0E0E0",
   padding: "20px",
+  backgroundColor: "#E0E0E0",
 });
 
 export const CssBoxImgCart = styled(Box)({
-  backgroundColor: "#E0E0E0",
+  padding: "20px",
   display: "flex",
   alignItems: "center",
+  backgroundColor: "#E0E0E0",
 });
 
 export const CssBoxContentCart = styled(Box)({

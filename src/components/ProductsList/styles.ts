@@ -7,3 +7,8 @@ export const ContainerProductsList = styled.div`
   margin: 20px;
   justify-content: center;
 `;
+
+export const BoxProductsList = styled.div`
+  position: relative;
+  top: 80px;
+`;

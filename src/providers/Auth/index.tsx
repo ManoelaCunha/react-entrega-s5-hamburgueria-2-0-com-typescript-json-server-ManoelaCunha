@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useMemo } from "react";
 import { IUserDataSignIn, IUserDataSignUp } from "../../types/types";
 import { toast } from "react-toastify";
 import { History } from "history";
@@ -63,11 +63,18 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     history.push("/");
   };
 
-  return (
-    <AuthContext.Provider value={{ authToken, userId, Logout, SignIn, SignUp }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      authToken,
+      userId,
+      Logout,
+      SignIn,
+      SignUp,
+    }),
+    [authToken, userId]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);

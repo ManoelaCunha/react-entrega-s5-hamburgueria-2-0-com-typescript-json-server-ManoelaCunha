@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://api-hamburgueria-kenzie.herokuapp.com/",
+  baseURL: "https://api-hamburgueria-kenzie.vercel.app/",
 });
 
 export default api;

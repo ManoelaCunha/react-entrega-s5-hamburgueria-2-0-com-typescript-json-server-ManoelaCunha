@@ -10,4 +10,5 @@ export const Container = styled.div`
   justify-content: flex-start;
   font-size: calc(10px + 2vmin);
   color: black;
+  padding-bottom: 80px;
 `;

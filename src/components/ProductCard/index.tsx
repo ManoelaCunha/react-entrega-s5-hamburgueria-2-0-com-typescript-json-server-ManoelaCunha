@@ -50,7 +50,11 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
       {isInTheCart ? (
         <CssPaperCart elevation={5}>
           <CssBoxImgCart>
-            <img src={image} alt={name} width="135" height="85" />
+            <img
+              src={image}
+              alt={name}
+              style={{ width: "90px", height: "auto", maxHeight: "75px" }}
+            />
           </CssBoxImgCart>
 
           <CssBoxContentCart>
@@ -94,7 +98,11 @@ const ProductCard = ({ product, isInTheCart = false }: ProductCardProps) => {
       ) : (
         <CssPaper elevation={5}>
           <CssBoxImg>
-            <img src={image} alt={name} width="200" height="140" />
+            <img
+              src={image}
+              alt={name}
+              style={{ width: "250px", height: "auto", maxHeight: "210px" }}
+            />
           </CssBoxImg>
           <CssTypographyTitle variant="h6">{name}</CssTypographyTitle>
           <CssTypographyCategory variant="subtitle1">

@@ -4,6 +4,7 @@ import {
   useState,
   useEffect,
   ReactNode,
+  useMemo,
 } from "react";
 import api from "../../services";
 import { IProduct } from "../../types/types";
@@ -41,7 +42,6 @@ export const ProductsProvider = ({ children }: ProductsProviderProps) => {
 
   useEffect(() => {
     getProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getFilteredProducts = (filterValue: string) => {
@@ -62,10 +62,18 @@ export const ProductsProvider = ({ children }: ProductsProviderProps) => {
     }
   };
 
+  const value = useMemo(
+    () => ({
+      products,
+      filteredProducts,
+      getProducts,
+      getFilteredProducts,
+    }),
+    [products, filteredProducts]
+  );
+
   return (
-    <ProductsContext.Provider
-      value={{ getProducts, products, getFilteredProducts, filteredProducts }}
-    >
+    <ProductsContext.Provider value={value}>
       {children}
     </ProductsContext.Provider>
   );

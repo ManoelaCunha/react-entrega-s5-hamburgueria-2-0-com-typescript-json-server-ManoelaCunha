@@ -1,19 +1,22 @@
 import styled from "styled-components";
 
-export const ContainerCartList = styled.div`
+export const BoxCartList = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
+  justify-content: center;
+  position: relative;
+  top: 80px;
+`;
+
+export const ContainerCartList = styled.div`
   flex-wrap: wrap;
   max-width: 1280px;
   margin: 20px;
-  justify-content: center;
 `;
 
 export const ContainerTitle = styled.div`
   width: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 3px 10px;
   margin-top: 30px;
   color: white;
@@ -43,4 +46,6 @@ export const ContainerTotalPrice = styled.div`
 
 export const ContainerText = styled.div`
   margin: 40px;
+  position: relative;
+  top: 80px;
 `;

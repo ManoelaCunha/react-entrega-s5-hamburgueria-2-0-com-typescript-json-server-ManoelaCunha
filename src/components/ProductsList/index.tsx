@@ -2,10 +2,8 @@ import ProductCard from "../ProductCard";
 import { IProduct } from "../../types/types";
 
 import { useState, useEffect } from "react";
-import { useCart } from "../../providers/Cart";
 
-import { Box } from "@material-ui/core";
-import { ContainerProductsList } from "./styles";
+import { BoxProductsList, ContainerProductsList } from "./styles";
 import {
   BootstrapInput,
   Filter,
@@ -20,29 +18,20 @@ interface ProductsListProps {
 }
 
 const ProductsList = ({ products, isInTheCart = false }: ProductsListProps) => {
-  const { cart, getProductsCart } = useCart();
   const { getFilteredProducts, filteredProducts } = useProducts();
 
   const [filterValue, setFilterValue] = useState("Todos");
 
   useEffect(() => {
-    getProductsCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart]);
-
-  useEffect(() => {
     getFilteredProducts(filterValue);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products, filterValue]);
 
   return (
-    <Box>
+    <BoxProductsList>
       <FormControlCustom variant="outlined">
         <Filter
-          labelId="demo-customized-select-label"
-          id="demo-customized-select"
-          value={filterValue}
           label="Filtro"
+          value={filterValue}
           onChange={(e: any) => setFilterValue(e.target.value)}
           input={<BootstrapInput />}
         >
@@ -66,7 +55,7 @@ const ProductsList = ({ products, isInTheCart = false }: ProductsListProps) => {
               <ProductCard key={product.id} product={product} />
             ))}
       </ContainerProductsList>
-    </Box>
+    </BoxProductsList>
   );
 };
 
